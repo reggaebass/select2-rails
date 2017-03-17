@@ -1169,6 +1169,7 @@ S2.define('select2/results',[
       self.$results.attr('aria-expanded', 'false');
       self.$results.attr('aria-hidden', 'true');
       self.$results.removeAttr('aria-activedescendant');
+      self.clear();
     });
 
     container.on('results:toggle', function () {
@@ -4441,9 +4442,19 @@ S2.define('select2/dropdown/attachBody',[
     container.on('open', function () {
       self._showDropdown();
       self._attachPositioningHandler(container);
+      if (!setupResultsEvents) {
+        setupResultsEvents = true;
 
-      // Must bind after the results handlers to ensure correct sizing
-      self._bindContainerResultHandlers(container);
+        container.on('results:all', function () {
+          self._resizeDropdown();
+          self._positionDropdown();
+        });
+
+        container.on('results:append', function () {
+          self._resizeDropdown();
+          self._positionDropdown();
+        });
+      }
     });
 
     container.on('close', function () {
@@ -4553,8 +4564,8 @@ S2.define('select2/dropdown/attachBody',[
 
     $(window).on(scrollEvent + ' ' + resizeEvent + ' ' + orientationEvent,
       function (e) {
-      self._positionDropdown();
       self._resizeDropdown();
+      self._positionDropdown();
     });
   };
 
@@ -4644,7 +4655,7 @@ S2.define('select2/dropdown/attachBody',[
 
     if (newDirection == 'above' ||
       (isCurrentlyAbove && newDirection !== 'below')) {
-      css.top = container.top - parentOffset.top - dropdown.height;
+      css.top = container.top + parentOffset.top - dropdown.height;
     }
 
     if (newDirection != null) {
@@ -4677,8 +4688,8 @@ S2.define('select2/dropdown/attachBody',[
   AttachBody.prototype._showDropdown = function (decorated) {
     this.$dropdownContainer.appendTo(this.$dropdownParent);
 
-    this._positionDropdown();
     this._resizeDropdown();
+    this._positionDropdown();
   };
 
   return AttachBody;
