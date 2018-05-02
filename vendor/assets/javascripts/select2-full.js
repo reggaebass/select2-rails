@@ -1137,8 +1137,7 @@ S2.define('select2/results',[
       }
 
       self.setClasses();
-
-      if (self.options.get('scrollAfterSelect')) {
+      if(self.options.get('multiple') && !self.options.get('closeOnSelect')) {
         self.highlightFirstItem();
       }
     });
@@ -1149,8 +1148,7 @@ S2.define('select2/results',[
       }
 
       self.setClasses();
-
-      if (self.options.get('scrollAfterSelect')) {
+      if(self.options.get('multiple') && !self.options.get('closeOnSelect')) {
         self.highlightFirstItem();
       }
     });
