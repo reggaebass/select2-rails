@@ -2006,7 +2006,10 @@ S2.define('select2/selection/search',[
 
     this.resizeSearch();
     if (searchHadFocus) {
-      this.$search.focus();
+     var self = this;
+       window.setTimeout(function() {
+         self.$search.focus();
+      }, 0);
     }
   };
 
