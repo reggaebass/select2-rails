@@ -2124,6 +2124,7 @@ S2.define('select2/selection/search',[
       self._keyUpPrevented = evt.isDefaultPrevented();
 
       var key = evt.which;
+      if(key == undefined) return;
 
       if (key === KEYS.BACKSPACE && self.$search.val() === '') {
         var $previousChoice = self.$selection
@@ -2186,6 +2187,7 @@ S2.define('select2/selection/search',[
         }
 
         var key = evt.which;
+        if(key == undefined) return;
 
         // We can freely ignore events from modifier keys
         if (key == KEYS.SHIFT || key == KEYS.CTRL || key == KEYS.ALT) {
@@ -5768,6 +5770,7 @@ S2.define('select2/core',[
 
     this.on('keypress', function (evt) {
       var key = evt.which;
+      if(key == undefined) return;
 
       if (self.isOpen()) {
         if (key === KEYS.ESC || key === KEYS.TAB ||
